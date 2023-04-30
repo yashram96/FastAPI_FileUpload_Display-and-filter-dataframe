@@ -10,58 +10,59 @@ from typing import Optional
 
 app = FastAPI()
 
+# Add static files such as css and js
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 templates = Jinja2Templates(directory="templates")
 
 
+# To get unique file name which is uploaded
 def get_unique_filename(filename):
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     basename, extension = os.path.splitext(filename)
     return f"{basename}_{timestamp}{extension}"
 
+# Home Endpoint
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
+# To upload file endpoint 
 @app.post("/uploadfile", response_class=HTMLResponse)
 async def UploadFile(request: Request, file: UploadFile = File(...)):
     
     
     media_folder = os.path.join(os.getcwd(), 'media')
+    
+    # Creates media folder in root directory if not exists 
     if not os.path.exists(media_folder):
         os.makedirs(media_folder)
+    
+    # Generates unique file name 
     unique_filename = get_unique_filename(file.filename)
     file_path = os.path.join(media_folder, unique_filename)
     
     with open(file_path, "wb") as buffer:
         buffer.write(await file.read())
         
-        
-    return RedirectResponse(url="/dataframe/" + unique_filename)
+    # redirect success page 
+    return RedirectResponse(url="/upload_success/" + unique_filename)
     
 
-@app.post("/dataframe/{filename}")
+# Upload success page 
+@app.post("/upload_success/{filename}")
 async def create_upload_file(request: Request , filename :str):
-    # print(filename)
-    file_location = f"media/{filename}"
-    file_path = f"media/{filename}"
-    file_extension = filename.split(".")[-1]
-    
-    if file_extension == 'csv':
-        df = pd.read_csv(file_path)
-    elif file_extension in ['xls', 'xlsx']:
-        df = pd.read_excel(file_path)
-    else:
-        return "Invalid file format"
-        
-    return templates.TemplateResponse("upload_success.html", {"request": request, "dataframe": df,"file_name" : filename})
+  
+    return templates.TemplateResponse("upload_success.html", {"request": request,"file_name" : filename})
 
 
+# To show the file data
 @app.get("/showdataframe/{file_name}")
 async def show_dataframe(request: Request , file_name : str , page: Optional[int] = 1,search_term: Optional[str] = None, column_select: Optional[str] = None):
+    
+    # Check and read file type and data into pandas dataframe
     file_extension = file_name.split(".")[-1]
     
     if file_extension == 'csv':
@@ -75,20 +76,22 @@ async def show_dataframe(request: Request , file_name : str , page: Optional[int
 
     selected_column_name = column_select
     
-    print(selected_column_name)
-    print(search_term)
-    
+    # Null values are isplayed as nan in frontend . if the user search using nan this converts into null values
     if search_term == "nan":
         search_term = None
     
+    # Check the filtered search values and filter the dataframe 
     if selected_column_name is not None and selected_column_name != 'Select column to search' and search_term is not None:
         data = data[data[selected_column_name].astype(str) == search_term]
         
-    page = int(request.query_params.get("page", default=1))
+    # Calculates the Pagination values 
+    # page = int(request.query_params.get("page", default=1))
     per_page = 50
     num_pages = int(data.shape[0] / per_page) + 1
     start_idx = (page - 1) * per_page
     end_idx = start_idx + per_page
+    
+    # Final dataframe 
     rows = data.iloc[start_idx:end_idx].to_dict(orient="records")
     
     if num_pages <= 7:

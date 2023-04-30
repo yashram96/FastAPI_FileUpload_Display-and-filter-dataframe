@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container">
     <h1 class="my-5">File Upload</h1>
+    <p class="my-2">Accepted only .csv, .xls, .xlsx</p>
     <form method="POST" enctype="multipart/form-data" action="{{ url_for('UploadFile') }}">
         <div class="mb-3">
             <input class="form-control" type="file" name="file" accept=".csv, .xls, .xlsx" required>
