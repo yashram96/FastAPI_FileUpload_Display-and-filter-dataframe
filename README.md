@@ -18,7 +18,7 @@ In this project we are going to upload Excel/CSV file and filter the data using 
 
 ## Usage 
 #### Step 1 : This is home page. Upload file in below page. All the file names will be appended with timestamp and uploaded into media folder in project root directory. 
-Quick start with [sampe file](api-scrip-master.csv)
+Quick start with [sample file](api-scrip-master.csv)
 
  ![image](https://user-images.githubusercontent.com/52245316/235346562-f9e27429-630d-4456-b7b8-bad9de9f8685.png)
 
