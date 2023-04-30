@@ -3,7 +3,6 @@ services:
   excel-upload-fastapi:
     build: .
     image: kasiyashram96/excel-upload-fastapi
-    command: uvicorn main:app --host 0.0.0.0
     ports:
       - "8081:8081"
     container_name: excel-upload-fastapi
