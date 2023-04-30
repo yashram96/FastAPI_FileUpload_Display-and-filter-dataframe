@@ -2,7 +2,7 @@
 In this project we are going to upload Excel/CSV file and filter the data using fast api and jinja2 
 
 
-## Manual setup 
+## Manual setup (Extrct the project code into a folder and open terminal into project root directory) 
 1. Create virtual environment with `python3 -m venv venv`
 2. Add Virtual environment path to source in `~/.bashrc` file at the end `source venv/bin/activate` and open new bash session.You will see `(venv)` which means you are in virtual environment 
 3. `pip install -r requirements.txt`
@@ -16,11 +16,18 @@ In this project we are going to upload Excel/CSV file and filter the data using 
 
 
 ## Usage 
- Upload file in below page 
+ This is home page. Upload file in below page 
+ All the files will be appended with timestamp and uploaded into media folder in project root directory 
+ ![image](https://user-images.githubusercontent.com/52245316/235346562-f9e27429-630d-4456-b7b8-bad9de9f8685.png)
 
- Click on `See data` 
+
+ Click on `Show data` 
+ ![image](https://user-images.githubusercontent.com/52245316/235346594-48a6bf5c-1a39-4fa9-86ca-3d92ccf3f141.png)
+
 
  You can see data now and free to use filters 
+ ![image](https://user-images.githubusercontent.com/52245316/235346629-c85a2985-d4a9-4086-8c2d-9c0f5aa1bea8.png)
+
 
 
 -- Kasi Yeswanth
