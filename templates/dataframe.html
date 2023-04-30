@@ -41,13 +41,13 @@
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       {% if prev_page is defined %}
-        <li class="page-item"><a class="page-link" href="?page={{ prev_page }}&file_name={{ file_name }}{% if search_term is not none and (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ prev_page }}&file_name={{ file_name }}{% if  (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">Previous</a></li>
       {% else %}
         <li class="page-item disabled"><span class="page-link">Previous</span></li>
       {% endif %}
 
       {% if current_page > 4 %}
-        <li class="page-item"><a class="page-link" href="?page=1&file_name={{ file_name }}{% if search_term is not none and (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">1</a></li>
+        <li class="page-item"><a class="page-link" href="?page=1&file_name={{ file_name }}{% if  (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">1</a></li>
         <li class="page-item"><span class="page-link">...</span></li>
       {% endif %}
 
@@ -55,17 +55,17 @@
         {% if page == current_page %}
           <li class="page-item active"><span class="page-link">{{ page }}</span></li>
         {% else %}
-          <li class="page-item"><a class="page-link" href="?page={{ page }}&file_name={{ file_name }}{% if search_term is not none and (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">{{ page }}</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page }}&file_name={{ file_name }}{% if  (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">{{ page }}</a></li>
         {% endif %}
       {% endfor %}
 
       {% if current_page < num_pages - 3 %}
         <li class="page-item"><span class="page-link">...</span></li>
-        <li class="page-item"><a class="page-link" href="?page={{ num_pages }}&file_name={{ file_name }}{% if search_term is not none and (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">{{ num_pages }}</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ num_pages }}&file_name={{ file_name }}{% if  (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">{{ num_pages }}</a></li>
       {% endif %}
 
       {% if next_page is defined %}
-        <li class="page-item"><a class="page-link" href="?page={{ next_page }}&file_name={{ file_name }}{% if search_term is not none and (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">Next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ next_page }}&file_name={{ file_name }}{% if  (column_select!= 'Select column to search' or column_select is not none) %}&search_term={{ search_term }}&column_select={{ column_select }}{% endif %}">Next</a></li>
       {% else %}
         <li class="page-item disabled"><span class="page-link">Next</span></li>
       {% endif %}
@@ -77,7 +77,7 @@
       <label for="page-input">Enter page number:</label>
       <input type="number" class="form-control" id="page-input" name="page" min="1" max="{{ num_pages }}" value="{{ current_page }}">
     </div>
-    {% if search_term is defined and (column_select != 'Select column to search' or column_select is not none) %}
+    {% if (column_select != 'Select column to search' or column_select is not none) %}
       <input type="hidden" name="search_term" value="{{ search_term }}">
       <input type="hidden" name="column_select" value="{{ column_select }}">
     {% endif %}

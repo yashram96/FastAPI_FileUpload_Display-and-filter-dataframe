@@ -81,7 +81,7 @@ async def show_dataframe(request: Request , file_name : str , page: Optional[int
         search_term = None
     
     # Check the filtered search values and filter the dataframe 
-    if selected_column_name is not None and selected_column_name != 'Select column to search' and search_term is not None:
+    if selected_column_name is not None and selected_column_name != 'Select column to search':
         data = data[data[selected_column_name].astype(str) == search_term]
         
     # Calculates the Pagination values 
